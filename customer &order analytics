@@ -1,0 +1,44 @@
+#In this SQL, I'm querying a database with multiple tables in it to quantify statistics about customer and order data.
+
+--How many orders were placed in January?
+select count(orderid)
+from Jansales
+where length(orderid)=6
+and orderid<>'orderid'
+;
+--How many of those orders were for an iPhone?
+select count(orderid),product
+from Jansales
+where length(orderid)=6
+and orderid<>'orderid'
+and product='iPhone'
+;
+--Select the customer account numbers for all the orders that were placed in February.
+select distinct c.acctnum
+from customers c
+join FebSales f on c.order_id=f.orderID
+where length(orderid)=6
+and orderid<>'orderid'
+
+--Which product was the cheapest one sold in January, and what was the price?
+select distinct price, product
+from JanSales
+order by price asc
+;
+
+--What is the total revenue for each product sold in January?
+select sum(quantity)*price AS revenue,product
+from jansales
+group by product
+;
+
+--Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, 
+--how many of each were sold, and what was the total revenue?
+select product,location,(quantity*price) as revenue
+from FebSales
+where location ='548 Lincoln St, Seattle, WA 98101'
+;
+
+--How many customers ordered more than 2 products at a time in February, 
+--and what was the average amount spent for those customers?
+
