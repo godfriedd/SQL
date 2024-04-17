@@ -39,6 +39,15 @@ from FebSales
 where location ='548 Lincoln St, Seattle, WA 98101'
 ;
 
+--List all the products sold in Los Angeles in February, 
+--and include how many of each were sold.
+select product,location,sum(quantity)
+from FebSales
+where location like '%los angeles%'
+group by product
+
+
+
 --How many customers ordered more than 2 products at a time in February, 
 --and what was the average amount spent for those customers?
 
