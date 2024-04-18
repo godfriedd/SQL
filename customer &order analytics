@@ -51,3 +51,52 @@ group by product
 --How many customers ordered more than 2 products at a time in February, 
 --and what was the average amount spent for those customers?
 
+
+
+-List all the products sold in Los Angeles in February, 
+--and include how many of each were sold.
+select product,location,sum(quantity)
+from FebSales
+where location like '%los angeles%'
+group by product
+
+
+--Which locations in New York received at least 3 orders in January,
+--and how many orders did they each receive? 
+select distinct orderId,min(quantity),location
+from JanSales
+where location like '%new york%'
+group by orderID
+having min(quantity) >=3
+order by orderId asc
+
+--How many of each type of headphone were sold in February?
+select sum(quantity),product
+from febsales
+where product like '%headphone%'
+group by product
+;
+--What was the average amount spent per account in February?
+SELECT avg(quantity*price)
+FROM BIT_DB.FebSales Feb
+
+JOIN BIT_DB.customers cust
+ON FEB.orderid=cust.order_id
+
+WHERE length(orderid) = 6 
+AND orderid <> 'Order ID'
+
+--What was the average quantity of products purchased per account in February?
+select avg(quantity)
+from febsales f
+join customers c on f.orderid=c.order_id
+where length(orderid)=6
+and orderid<>'Order ID'
+
+--Which product brought in the most revenue in January 
+--and how much revenue did it bring in total?
+select distinct product,price,sum(quantity),(sum(quantity)*price) AS revenue
+from jansales
+group by product
+order by revenue desc
+
